@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify app/app.jsx -o bundle.js -t babelify",
+    "build": "browserify app/index.jsx -o bundle.js -t babelify",
     "start": "electron index.js"
   },
   "keywords": [],
@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "react": "^15.1.0",
-    "react-dom": "^15.1.0"
+    "react-dom": "^15.1.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.5.2"
   }
 }
