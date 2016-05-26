@@ -148,10 +148,11 @@ var _actions = require('../actions');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var remote = window.require('electron').remote;
+
 var AddPicture = function AddPicture(_ref) {
   var dispatch = _ref.dispatch;
 
-  var input = void 0;
   return _react2.default.createElement(
     'div',
     null,
@@ -159,15 +160,17 @@ var AddPicture = function AddPicture(_ref) {
       'form',
       { onSubmit: function onSubmit(e) {
           e.preventDefault();
-          dispatch((0, _actions.addPicture)(input.value));
+          remote.require('./openDir')(function (arg) {
+            console.log(arg);
+            arg.map(function (data) {
+              dispatch((0, _actions.addPicture)(data));
+            });
+          });
         } },
-      _react2.default.createElement('input', { ref: function ref(node) {
-          input = node;
-        } }),
       _react2.default.createElement(
         'button',
         { type: 'submit' },
-        'Add Picture'
+        'Open Directory'
       )
     )
   );

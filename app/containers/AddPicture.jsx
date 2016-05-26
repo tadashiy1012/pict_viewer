@@ -2,16 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addPicture } from '../actions';
 
+const remote = window.require('electron').remote;
+
 let AddPicture = ({ dispatch }) => {
-  let input;
   return (
     <div>
       <form onSubmit={e => {
         e.preventDefault();
-        dispatch(addPicture(input.value));
+        remote.require('./openDir')((arg) => {
+          console.log(arg);
+          arg.map((data) => {
+            dispatch(addPicture(data));
+          });
+        });
       }}>
-        <input ref={node => { input = node }} />
-        <button type="submit">Add Picture</button>
+        <button type="submit">Open Directory</button>
       </form>
     </div>
   );

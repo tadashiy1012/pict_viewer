@@ -15,7 +15,9 @@ module.exports = function openDir(callback) {
       const ext = arg.substring(arg.lastIndexOf('.') + 1);
       return !fs.statSync(filePath).isDirectory() && ext === 'jpg';
     });
-    console.log(files);
-    callback(files);
+    const datas = files.map((file) => {
+      return 'data:image/jpg;base64,' + fs.readFileSync(path.join(args[0], file)).toString('base64');
+    });
+    callback(datas);
   });
 };
