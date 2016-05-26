@@ -54,13 +54,13 @@ var App = function App() {
 exports.default = App;
 
 },{"../containers/AddPicture.jsx":5,"../containers/PictureContainer.jsx":6,"react":189}],3:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = require('react');
+var _react = require("react");
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -70,7 +70,8 @@ var Picture = function Picture(_ref) {
   var onClick = _ref.onClick;
   var picture = _ref.picture;
 
-  return _react2.default.createElement('img', {
+  return _react2.default.createElement("img", {
+    className: "pictureThumbnail",
     src: picture,
     onClick: onClick
   });

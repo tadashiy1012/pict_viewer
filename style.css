@@ -1,0 +1,6 @@
+img.pictureThumbnail {
+  max-height: 200px;
+  max-width: 280px;
+  margin: 4px;
+  border: solid 1px #777;
+}
