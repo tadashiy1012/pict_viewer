@@ -1,5 +1,4 @@
 const picture = (state, action) => {
-  console.log('\t', action);
   switch (action.type) {
     case 'ADD_PICTURE':
       return {
@@ -12,7 +11,6 @@ const picture = (state, action) => {
 };
 
 const pictures = (state = [], action) => {
-  console.log(action);
   switch (action.type) {
     case 'ADD_PICTURE':
       return [

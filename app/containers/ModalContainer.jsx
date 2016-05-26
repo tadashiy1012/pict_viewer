@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
-import { showPicture, showModal } from '../actions';
-import PictureList from '../components/PictureList.jsx';
+import { showPicture, showModal, closeModal } from '../actions';
+import PictureModal from '../components/PictureModal.jsx';
 
 const mapStateToProps = (state) => {
   return {
-    pictures: state.pictures
+    picture: state.modal
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPictClick: (arg) => {
-      dispatch(showModal(arg));
+    onCloseClick: () => {
+      dispatch(closeModal());
     }
   };
 };
@@ -19,6 +19,6 @@ const mapDispatchToProps = (dispatch) => {
 const PictureContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(PictureList);
+)(PictureModal);
 
 export default PictureContainer;

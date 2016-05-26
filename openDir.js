@@ -9,7 +9,6 @@ module.exports = function openDir(callback) {
   dialog.showOpenDialog(focusedWindow, {
     properties: ['openDirectory']
   }, (args) => {
-    console.log(args);
     const files = fs.readdirSync(args[0]).filter((arg) => {
       const filePath = path.join(args[0], arg);
       const ext = arg.substring(arg.lastIndexOf('.') + 1);

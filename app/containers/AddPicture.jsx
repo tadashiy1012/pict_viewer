@@ -10,7 +10,6 @@ let AddPicture = ({ dispatch }) => {
       <form onSubmit={e => {
         e.preventDefault();
         remote.require('./openDir')((arg) => {
-          console.log(arg);
           arg.map((data) => {
             dispatch(addPicture(data));
           });

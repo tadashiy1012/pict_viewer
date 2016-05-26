@@ -7,7 +7,7 @@ const PictureList = ({ pictures, onPictClick }) => {
       {pictures.map(picture => <Picture
         key={picture.id}
         {...picture}
-        onClick={() => onPictClick(picture.id)}
+        onClick={() => onPictClick(picture.picture)}
       />)}
     </div>
   );
