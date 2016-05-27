@@ -7,6 +7,12 @@ export const addPicture = (picture) => {
   };
 };
 
+export const clearPictures = () => {
+  return {
+    type: 'CLEAR_PICTURES'
+  };
+};
+
 export const showModal = (picture, height) => {
   return {
     type: 'SHOW_MODAL',

@@ -11,7 +11,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onPictClick: (picture, size) => {
-      console.log(size);
       dispatch(showModal(picture, size));
     }
   };

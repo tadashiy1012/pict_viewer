@@ -22106,6 +22106,8 @@
 	  switch (action.type) {
 	    case 'ADD_PICTURE':
 	      return [].concat(_toConsumableArray(state), [picture(undefined, action)]);
+	    case 'CLEAR_PICTURES':
+	      return [];
 	    default:
 	      return state;
 	  }
@@ -22208,7 +22210,6 @@
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
 	    onPictClick: function onPictClick(picture, size) {
-	      console.log(size);
 	      dispatch((0, _actions.showModal)(picture, size));
 	    }
 	  };
@@ -22233,6 +22234,12 @@
 	    type: 'ADD_PICTURE',
 	    id: nextId++,
 	    picture: picture
+	  };
+	};
+	
+	var clearPictures = exports.clearPictures = function clearPictures() {
+	  return {
+	    type: 'CLEAR_PICTURES'
 	  };
 	};
 	
@@ -22373,6 +22380,7 @@
 	      'form',
 	      { onSubmit: function onSubmit(e) {
 	          e.preventDefault();
+	          dispatch((0, _actions.clearPictures)());
 	          remote.require('./openDir')(function (arg) {
 	            arg.map(function (data) {
 	              dispatch((0, _actions.addPicture)(data));

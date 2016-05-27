@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addPicture } from '../actions';
+import { addPicture, clearPictures } from '../actions';
 
 const remote = window.require('electron').remote;
 
@@ -9,6 +9,7 @@ let AddPicture = ({ dispatch }) => {
     <div>
       <form onSubmit={e => {
         e.preventDefault();
+        dispatch(clearPictures());
         remote.require('./openDir')((arg) => {
           arg.map((data) => {
             dispatch(addPicture(data));

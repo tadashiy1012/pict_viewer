@@ -17,6 +17,8 @@ const pictures = (state = [], action) => {
         ...state,
         picture(undefined, action)
       ];
+    case 'CLEAR_PICTURES':
+      return [];
     default:
       return state;
   }
