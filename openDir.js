@@ -17,6 +17,14 @@ module.exports = function openDir(callback) {
     const datas = files.map((file) => {
       return 'data:image/jpg;base64,' + fs.readFileSync(path.join(args[0], file)).toString('base64');
     });
-    callback(datas);
+    const files2 = fs.readdirSync(args[0]).filter((arg) => {
+      const filePath = path.join(args[0], arg);
+      const ext = arg.substring(arg.lastIndexOf('.') + 1);
+      return !fs.statSync(filePath).isDirectory() && ext === 'png';
+    });
+    const datas2 = files2.map((file) => {
+      return 'data:image/png;base64,' + fs.readFileSync(path.join(args[0], file)).toString('base64');
+    });
+    callback([].concat(datas, datas2));
   });
 };
