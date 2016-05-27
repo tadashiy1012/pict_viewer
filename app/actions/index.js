@@ -7,17 +7,11 @@ export const addPicture = (picture) => {
   };
 };
 
-export const showPicture = (picture) => {
-  return {
-    type: 'SHOW_PICTURE',
-    picture: picture
-  };
-};
-
-export const showModal = (picture) => {
+export const showModal = (picture, height) => {
   return {
     type: 'SHOW_MODAL',
-    picture: picture
+    picture: picture,
+    height: height
   };
 };
 

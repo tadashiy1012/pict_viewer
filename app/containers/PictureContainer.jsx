@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { showPicture, showModal } from '../actions';
+import { showModal } from '../actions';
 import PictureList from '../components/PictureList.jsx';
 
 const mapStateToProps = (state) => {
@@ -10,8 +10,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPictClick: (arg) => {
-      dispatch(showModal(arg));
+    onPictClick: (picture, size) => {
+      console.log(size);
+      dispatch(showModal(picture, size));
     }
   };
 };

@@ -1,13 +1,18 @@
 import React, { PropTypes } from 'react';
 import Picture from './Picture.jsx';
 
+function getWindowHeight() {
+  const { BrowserWindow } = window.require('electron').remote;
+  return BrowserWindow.getFocusedWindow().getSize()[1];
+}
+
 const PictureList = ({ pictures, onPictClick }) => {
   return (
     <div className="pictureList">
       {pictures.map(picture => <Picture
         key={picture.id}
         {...picture}
-        onClick={() => onPictClick(picture.picture)}
+        onClick={() => onPictClick(picture.picture, getWindowHeight())}
       />)}
     </div>
   );

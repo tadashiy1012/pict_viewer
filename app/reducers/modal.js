@@ -1,7 +1,7 @@
 const modal = (state = '', action) => {
   switch (action.type) {
     case 'SHOW_MODAL':
-      return action.picture || state;
+      return { picture: action.picture, height: action.height };
     case 'CLOSE_MODAL':
       return '';
     default:

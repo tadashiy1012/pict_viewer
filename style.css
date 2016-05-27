@@ -67,7 +67,16 @@ input:checked ~ .modal-overlay {
   z-index: 999;
 }
 
+.closeContainer {
+  text-align: right;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 img.modalPicture {
-  max-width: 780px;
-  max-height: 580px;
+  height: 90%;
 }

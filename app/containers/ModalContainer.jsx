@@ -1,10 +1,17 @@
 import { connect } from 'react-redux';
-import { showPicture, showModal, closeModal } from '../actions';
+import { closeModal } from '../actions';
 import PictureModal from '../components/PictureModal.jsx';
 
 const mapStateToProps = (state) => {
+  console.log(state);
+  if (state.modal === '') {
+    return {
+      picture: ''
+    };
+  }
   return {
-    picture: state.modal
+    picture: state.modal.picture,
+    height: state.modal.height
   };
 };
 

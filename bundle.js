@@ -22128,7 +22128,7 @@
 	
 	  switch (action.type) {
 	    case 'SHOW_MODAL':
-	      return action.picture || state;
+	      return { picture: action.picture, height: action.height };
 	    case 'CLOSE_MODAL':
 	      return '';
 	    default:
@@ -22207,8 +22207,9 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    onPictClick: function onPictClick(arg) {
-	      dispatch((0, _actions.showModal)(arg));
+	    onPictClick: function onPictClick(picture, size) {
+	      console.log(size);
+	      dispatch((0, _actions.showModal)(picture, size));
 	    }
 	  };
 	};
@@ -22235,17 +22236,11 @@
 	  };
 	};
 	
-	var showPicture = exports.showPicture = function showPicture(picture) {
-	  return {
-	    type: 'SHOW_PICTURE',
-	    picture: picture
-	  };
-	};
-	
-	var showModal = exports.showModal = function showModal(picture) {
+	var showModal = exports.showModal = function showModal(picture, height) {
 	  return {
 	    type: 'SHOW_MODAL',
-	    picture: picture
+	    picture: picture,
+	    height: height
 	  };
 	};
 	
@@ -22277,6 +22272,12 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function getWindowHeight() {
+	  var BrowserWindow = window.require('electron').remote.BrowserWindow;
+	
+	  return BrowserWindow.getFocusedWindow().getSize()[1];
+	}
+	
 	var PictureList = function PictureList(_ref) {
 	  var pictures = _ref.pictures;
 	  var onPictClick = _ref.onPictClick;
@@ -22289,7 +22290,7 @@
 	        key: picture.id
 	      }, picture, {
 	        onClick: function onClick() {
-	          return onPictClick(picture.picture);
+	          return onPictClick(picture.picture, getWindowHeight());
 	        }
 	      }));
 	    })
@@ -22412,8 +22413,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
+	  console.log(state);
+	  if (state.modal === '') {
+	    return {
+	      picture: ''
+	    };
+	  }
 	  return {
-	    picture: state.modal
+	    picture: state.modal.picture,
+	    height: state.modal.height
 	  };
 	};
 	
@@ -22448,6 +22456,7 @@
 	var PictureModal = function PictureModal(_ref) {
 	  var picture = _ref.picture;
 	  var onCloseClick = _ref.onCloseClick;
+	  var height = _ref.height;
 	
 	  return _react2.default.createElement(
 	    "div",
@@ -22461,7 +22470,7 @@
 	        { className: "modal-wrap" },
 	        _react2.default.createElement(
 	          "section",
-	          null,
+	          { className: "closeContainer" },
 	          _react2.default.createElement(
 	            "label",
 	            { onClick: function onClick() {
@@ -22472,8 +22481,14 @@
 	        ),
 	        _react2.default.createElement(
 	          "section",
-	          null,
-	          _react2.default.createElement("img", { className: "modalPicture", src: picture })
+	          { className: "imgContainer" },
+	          _react2.default.createElement(
+	            "div",
+	            { style: {
+	                height: height
+	              } },
+	            _react2.default.createElement("img", { className: "modalPicture", src: picture })
+	          )
 	        )
 	      )
 	    )
@@ -22481,7 +22496,9 @@
 	};
 	
 	PictureModal.propTypes = {
-	  picture: _react.PropTypes.string.isRequired
+	  picture: _react.PropTypes.string.isRequired,
+	  height: _react.PropTypes.number,
+	  onCloseClick: _react.PropTypes.func
 	};
 	
 	exports.default = PictureModal;

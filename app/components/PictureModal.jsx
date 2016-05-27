@@ -1,16 +1,19 @@
 import React, { PropTypes } from 'react';
 
-const PictureModal = ({ picture, onCloseClick }) => {
+const PictureModal = ({ picture, onCloseClick, height }) => {
   return (
     <div className="modal">
       <input id="modal-trigger" type="checkbox" checked={picture !== '' ? true : false} />
       <div className="modal-overlay">
         <div className="modal-wrap">
-          <section>
+          <section className="closeContainer">
             <label onClick={() => onCloseClick()}>✖</label>
           </section>
-          <section>
-            <img className="modalPicture" src={picture} />
+          <section className="imgContainer">
+            <div style={{
+              height: height
+            }}>
+              <img className="modalPicture" src={picture} /></div>
           </section>
         </div>
       </div>
@@ -19,7 +22,9 @@ const PictureModal = ({ picture, onCloseClick }) => {
 };
 
 PictureModal.propTypes = {
-  picture: PropTypes.string.isRequired
+  picture: PropTypes.string.isRequired,
+  height: PropTypes.number,
+  onCloseClick: PropTypes.func
 };
 
 export default PictureModal;
