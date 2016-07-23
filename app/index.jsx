@@ -2,10 +2,21 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import pictureApp from './reducers';
-import App from './components/App.jsx';
+import reducer from './reducers';
+import PictureContainer from './containers/PictureContainer.jsx';
+import AddPicture from './containers/AddPicture.jsx';
+import ModalContainer from './containers/ModalContainer.jsx';
 
-let store = createStore(pictureApp);
+const App = () => (
+  <div>
+    <ModalContainer />
+    <PictureContainer />
+    <hr />
+    <AddPicture />
+  </div>
+);
+
+const store = createStore(reducer);
 
 render(
   <Provider store={store}>
