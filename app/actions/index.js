@@ -1,28 +1,6 @@
-let nextId = 0;
-export const addPicture = (picture) => {
-  return {
-    type: 'ADD_PICTURE',
-    id: nextId++,
-    picture: picture
-  };
-};
+import {createAction} from 'redux-actions'
 
-export const clearPictures = () => {
-  return {
-    type: 'CLEAR_PICTURES'
-  };
-};
-
-export const showModal = (picture, height) => {
-  return {
-    type: 'SHOW_MODAL',
-    picture: picture,
-    height: height
-  };
-};
-
-export const closeModal = () => {
-  return {
-    type: 'CLOSE_MODAL'
-  };
-};
+export const addPicture = createAction('ADD_PICTURE');
+export const clearPictures = createAction('CLEAR_PICTURES');
+export const showModal = createAction('SHOW_MODAL');
+export const closeModal = createAction('CLOSE_MODAL');
