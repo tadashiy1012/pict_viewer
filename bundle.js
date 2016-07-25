@@ -23039,34 +23039,70 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var remote = window.require('electron').remote;
+	var ipc = window.require('electron').ipcRenderer;
+	var reciverInit = false;
 	
-	var AddPicture = function AddPicture(_ref) {
-	  var dispatch = _ref.dispatch;
+	var setReciver = function setReciver(func) {
+	  ipc.on('getImg-reply', function (ev, arg) {
+	    func(arg);
+	  });
+	  reciverInit = true;
+	};
 	
+	var check = function check(tgt) {
+	  var ext = tgt.substring(tgt.lastIndexOf('.') + 1);
+	  if (ext === 'jpg' || ext === 'png') {
+	    return true;
+	  } else {
+	    return false;
+	  }
+	};
+	
+	var addForm = function addForm(_ref) {
+	  var onSubmitWithClear = _ref.onSubmitWithClear;
+	  var onReciveData = _ref.onReciveData;
+	
+	  if (!reciverInit) {
+	    setReciver(onReciveData);
+	  }
 	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'form',
-	      { onSubmit: function onSubmit(e) {
-	          e.preventDefault();
-	          dispatch((0, _actions.clearPictures)());
-	          remote.require('./openDir')(function (arg) {
-	            arg.map(function (data) {
-	              dispatch((0, _actions.addPicture)(data));
-	            });
+	    'form',
+	    { onSubmit: function onSubmit(e) {
+	        e.preventDefault();
+	        onSubmitWithClear();
+	        remote.require('./openDir')(function (arg) {
+	          var files = arg.filter(function (f) {
+	            return check(f);
 	          });
-	        } },
-	      _react2.default.createElement(
-	        'button',
-	        { type: 'submit' },
-	        'Open Directory'
-	      )
+	          files.forEach(function (f) {
+	            ipc.send('getImg', f);
+	          });
+	        });
+	      } },
+	    _react2.default.createElement(
+	      'button',
+	      { type: 'submit' },
+	      'Open Directory'
 	    )
 	  );
 	};
 	
-	AddPicture = (0, _reactRedux.connect)()(AddPicture);
+	var mapStateToProps = function mapStateToProps(state) {
+	  return state;
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    onSubmitWithClear: function onSubmitWithClear() {
+	      dispatch((0, _actions.clearPictures)());
+	    },
+	    onReciveData: function onReciveData(data) {
+	      dispatch((0, _actions.addPicture)(data));
+	    }
+	  };
+	};
+	
+	var AddPicture = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(addForm);
 	
 	exports.default = AddPicture;
 
