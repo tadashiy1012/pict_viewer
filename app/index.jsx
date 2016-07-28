@@ -5,11 +5,14 @@ import { createStore } from 'redux';
 import reducer from './reducers';
 import PictureContainer from './containers/PictureContainer.jsx';
 import AddPicture from './containers/AddPicture.jsx';
+import Pagenation from './containers/Pagenation.jsx';
 import ModalContainer from './containers/ModalContainer.jsx';
 
 const App = () => (
   <div>
     <ModalContainer />
+    <Pagenation />
+    <hr />
     <PictureContainer />
     <hr />
     <AddPicture />
