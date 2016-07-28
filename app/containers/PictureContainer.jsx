@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { showModal } from '../actions';
+import { addPicture, showModal } from '../actions';
 
 const Picture = ({ onClick, picture }) => {
   return (
@@ -17,7 +17,24 @@ function getWindowHeight() {
   return BrowserWindow.getFocusedWindow().getSize()[1];
 }
 
-const PictureList = ({ pictures, onPictClick }) => {
+const ipc = window.require('electron').ipcRenderer;
+
+const setReciver = (func) => {
+  ipc.on('getImg-reply', (ev, arg) => {
+    func(arg);
+  });
+}
+
+const setSender = (files, page) => {
+  const start = 10 * (page - 1);
+  const end = (10 * (page -1)) + 10;
+  const len = files.length;
+  files.slice(start, end < len ? end : len).forEach((f) => {
+    ipc.send('getImg', f);
+  });
+};
+
+const PictureList = ({ pictures, onReciveData, onPictClick }) => {
   const pics = pictures.map((picture, idx) => {
     return (<Picture
       key={idx}
@@ -32,13 +49,23 @@ const PictureList = ({ pictures, onPictClick }) => {
   );
 };
 
+let prevPage = 0;
+
 const mapStateToProps = (state) => {
+  console.log(state);
+  if (state.page !== prevPage || state.loaded === true) {
+    setSender(state.files, state.page);
+  }
+  prevPage = state.page;
   return {
-    pictures: state.pictures
+    files: state.files,
+    pictures: state.pictures,
+    page: state.page
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
+  setReciver(data => dispatch(addPicture(data)));
   return {
     onPictClick: (picture, size) => {
       dispatch(showModal([picture, size]));
